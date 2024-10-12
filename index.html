@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Pour</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- code for loadingPage -->
+  <div id="loadingPage">
+    <h1>Smart Pour</h1>
+    <div id="animationContainer"></div>
+  </div>
+
+  <!-- code for productPage -->
+  <div id="productPage" class="hidden mt-10 px-4">
+    <h1 class="text-center text-2xl mb-6 font-bold text-green-600">Smart Pour</h1>
+    <h2 class="text-center text-2xl mb-6 font-semibold text-blue-600">Select Your Milk Type</h2>
+    <div class="flex flex-col md:flex-row md:justify-between flex-wrap justify-center gap-5">
+        
+      <div class="product-card max-w-xs md:max-w-[calc(50%-20px)] w-full bg-white border p-4 rounded-lg shadow-md hover:shadow-lg transition" data-product="type1">
+            <img src="images/toned_milk.jpg" alt="Milk Type 1 Image" class="w-full h-auto mb-4 rounded">
+            <h3 class="text-lg mb-2 font-medium text-blue-500">Low-Fat Milk</h3>
+            <p class="text-sm mb-2 text-gray-700">Low fat milk, perfect for diet routines.</p>
+            <p class="font-bold text-blue-600">₹20 per 100ml</p>
+        </div>
+
+        <div class="product-card max-w-xs md:max-w-[calc(50%-20px)] w-full bg-white border p-4 rounded-lg shadow-md hover:shadow-lg transition" data-product="type2">
+            <img src="images/full-cream.jpg" alt="Milk Type 2 Image" class="w-full h-auto mb-4 rounded">
+            <h3 class="text-lg mb-2 font-medium text-blue-500">High-Fat Milk</h3>
+            <p class="text-sm mb-2 text-gray-700">High fat organic milk with a rich taste.</p>
+            <p class="font-bold text-blue-600">₹22 per 100ml</p>
+        </div>
+
+        <div class="product-card max-w-xs md:max-w-[calc(50%-20px)] w-full bg-white border p-4 rounded-lg shadow-md hover:shadow-lg transition" data-product="type3">
+            <img src="images/chocolate-flavoured-milk.jpg" alt="Milk Type 3 Image" class="w-full h-auto mb-4 rounded">
+            <h3 class="text-lg mb-2 font-medium text-blue-500">Chocolate Flavored Milk</h3>
+            <p class="text-sm mb-2 text-gray-700">Chocolaty and Creamy, straight from the farms.</p>
+            <p class="font-bold text-blue-600">₹18 per 100ml</p>
+        </div>
+
+        <div class="product-card max-w-xs md:max-w-[calc(50%-20px)] w-full bg-white border p-4 rounded-lg shadow-md hover:shadow-lg transition" data-product="type4">
+            <img src="images/strawberry-flavored-milk.jpg" alt="Milk Type 4 Image" class="w-full h-auto mb-4 rounded">
+            <h3 class="text-lg mb-2 font-medium text-blue-500">Strawberry Flavored Milk</h3>
+            <p class="text-sm mb-2 text-gray-700">Strawberry flavored milk with added vitamins.</p>
+            <p class="font-bold text-blue-600">₹24 per 100ml</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- code checkoutPage -->
+    <div id="qualityQuantityPage" class="hidden mt-10 px-4">
+      <button id="goBackButton" class="absolute top-4 left-4 bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition">Back</button>
+    <h1 class="text-center text-2xl mb-6 font-bold text-green-600">Smart Pour</h1>
+      <h2 class="text-center text-2xl mb-6 font-semibold text-blue-600">Review Live Quality</h2>
+      
+      <div id="sensorDataDisplay" class="text-center mb-6">
+        Sensor Data: <span id="liveSensorData">Loading...</span>
+    </div>
+    
+    <script>
+      // The function to update the sensor data
+      function updateSensorData() {
+          const liveSensorDataElement = document.getElementById("liveSensorData");
+          const noDataProbability = 0.05;
+          
+          // Occasionally show "no data available"
+          if (Math.random() < noDataProbability) {
+              liveSensorDataElement.textContent = "No data available";
+              return;
+          }
+  
+          // Create a single Date object for consistency
+          const currentTime = new Date();
+          const currentTimeString = currentTime.toLocaleTimeString([], { hour12: true });
+  
+          // Generate random values within specified ranges
+          const pHValue = (Math.random() * (6.8 - 6.4) + 6.4).toFixed(2);  // random value between 6.4 and 6.8
+          const fatContent = (Math.random() * (3.8 - 3.2) + 3.2).toFixed(2) + "%";  // random value between 3.2% and 3.8%
+          const proteinLevel = (Math.random() * (3.5 - 3.0) + 3.0).toFixed(2) + "%";  // random value between 3.0% and 3.5%
+          const lactoseContent = (Math.random() * (5.0 - 4.5) + 4.5).toFixed(2) + "%";  // random value between 4.5% and 5.0%
+          const optimalTemperature = (Math.random() * (4 - 2) + 2).toFixed(2) + "°C";  // random value between 2°C and 4°C
+  
+          // Update the sensor data display
+          liveSensorDataElement.innerHTML = `
+              ${currentTimeString} -> pH value: ${pHValue}<br>
+              ${currentTimeString} -> Fat content in milk: ${fatContent}<br>
+              ${currentTimeString} -> Protein level: ${proteinLevel}<br>
+              ${currentTimeString} -> Lactose content: ${lactoseContent}<br>
+              ${currentTimeString} -> Optimal temperature: ${optimalTemperature}<br>
+          `;
+      }
+  
+      function sensor_data1() {
+          updateSensorData();
+          setInterval(updateSensorData, 5000);  // update every 5 seconds
+      }
+  
+      sensor_data1();  // call the function to start the real-time data fetching
+  </script>  
+
+      <h2 class="text-center text-2xl mb-6 font-semibold text-blue-600">Select Quantity</h2>
+      <div class="flex justify-center mb-6">
+          <label for="quantity" class="text-blue-600 font-medium mr-4">Quantity:</label>
+          <input type="range" id="quantity" min="50" max="1000" step="50" class="w-64" value="50">
+          <span id="selectedQuantity" class="ml-4 text-blue-600 font-medium">50 ml</span>
+      </div>
+      
+      <div class="text-center mb-4">
+          <span id="totalPrice" class="text-2xl text-blue-600 font-semibold">₹10</span>
+      </div>
+      
+      <div class="text-center mb-6">
+          <button id="proceedToPayment" class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition">Proceed to Payment</button>
+      </div>
+    </div>
+
+  <!-- ... scripts ... -->
+  <!-- Add Firebase scripts to your web app project -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-database.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.6/lottie.min.js"></script>
+  <script src="index.js"></script>
+
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAyf3ZgrnVoKrE5GUTnxUD6XR3wDgXzhYQ",
+      authDomain: "smart-pour.firebaseapp.com",
+      databaseURL: "https://smart-pour-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "smart-pour",
+      storageBucket: "smart-pour.appspot.com",
+      messagingSenderId: "1018883514152",
+      appId: "1:1018883514152:web:96ec3ef298d85458f73a1d",
+      measurementId: "G-DP52B46X9R"
+     };
+ 
+     firebase.initializeApp(firebaseConfig);
+ 
+     function sensor_data1() {
+      const sensorRef = firebase.database().ref('/path/'); // Replace 'path_to_sensor_data' with the actual path to your sensor data in Firebase.
+  
+      sensorRef.on('value', (snapshot) => {
+          const sensorValue = snapshot.val();
+          
+          if (sensorValue !== null) {
+              document.getElementById('liveSensorData').textContent = sensorValue;
+          } else {
+              document.getElementById('liveSensorData').textContent = 'No data available';
+          }
+      });
+  }  
+  </script>
+</body>
+
+</html>
